@@ -24,6 +24,9 @@ void dExileController_ReEnableGameplay(ExileController* __this, MethodInfo* meth
         if (State.GodMode && ((IsHost() && IsInGame()) || !State.SafeMode)) {
             PlayerControl_RpcProtectPlayer(*Game::pLocalPlayer, *Game::pLocalPlayer, GetPlayerOutfit(GetPlayerData(*Game::pLocalPlayer))->fields.ColorId, NULL);
         }
+        if (!State.PanicMode && State.Immortality) {
+            VentilationSystem_Update(VentilationSystem_Operation__Enum::Enter, 50, nullptr);
+        }
     }
     catch (...) {
         LOG_ERROR("Exception occurred in ExileController_ReEnableGameplay (ExileController)");

@@ -708,6 +708,17 @@ void dInnerNetClient_Update(InnerNetClient* __this, MethodInfo* method)
                 }
             }
 
+            if (IsInGame() && !State.PanicMode && State.Immortality) {
+                static int immortalityDelay = 0;
+                if (immortalityDelay <= 0) {
+                    VentilationSystem_Update(VentilationSystem_Operation__Enum::Enter, 50, nullptr);
+                    immortalityDelay = (int)(5.0 * GetFps());
+                }
+                else {
+                    immortalityDelay--;
+                }
+            }
+
             if (IsInGame() || IsInLobby()) {
                 float aliveSpeed = 2.5f, ghostSpeed = 3.f;
                 if ((*Game::pLocalPlayer)->fields.inMovingPlat)

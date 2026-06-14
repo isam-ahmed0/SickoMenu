@@ -954,10 +954,7 @@ void dPlayerControl_MurderPlayer(PlayerControl* __this, PlayerControl* target, M
         if (__this == *Game::pLocalPlayer && State.confuser && State.confuseOnKill)
             ControlAppearance(true);
         if (!State.PanicMode && State.Immortality && target == *Game::pLocalPlayer) {
-            auto killerName = GetPlayerOutfit(GetPlayerData(__this)) != nullptr
-                ? convert_from_string(GetPlayerOutfit(GetPlayerData(__this))->fields.PlayerName)
-                : "Unknown";
-            LOG_INFO(std::format("{} attempted to kill you but Immortality protected you!", killerName).c_str());
+            LOG_DEBUG("Immortality protected you from a murder attempt!");
         }
     }
     catch (...) {
