@@ -379,6 +379,7 @@ public:
 
     bool DisableHud = false;
     bool GodMode = false;
+    bool Immortality = false;
 
     bool ActiveAttach = false;
     bool ActiveShapeshift = false;

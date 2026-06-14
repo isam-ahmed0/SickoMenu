@@ -271,6 +271,7 @@ void Settings::Load() {
         JSON_TRYGET("KillInLobbies", this->KillInLobbies);
         JSON_TRYGET("KillInVanish", this->KillInVanish);
         JSON_TRYGET("GodMode", this->GodMode);
+        JSON_TRYGET("Immortality", this->Immortality);
 
         JSON_TRYGET("AdjustByDPI", this->AdjustByDPI);
 
@@ -783,6 +784,7 @@ void Settings::Save() {
                 { "KillInLobbies", this->KillInLobbies },
                 { "KillInVanish", this->KillInVanish },
                 { "GodMode", this->GodMode },
+                { "Immortality", this->Immortality },
 
                 { "RevealVotes", this->RevealVotes },
                 { "RevealAnonymousVotes", this->RevealAnonymousVotes },

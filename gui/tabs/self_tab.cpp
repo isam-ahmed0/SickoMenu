@@ -641,6 +641,16 @@ namespace SelfTab {
             ImGui::SameLine();
             if (((IsHost() && IsInGame()) || !State.SafeMode) && ToggleButton(IsHost() ? "God Mode" : "Visual Protection", &State.GodMode))
                 State.Save();
+            ImGui::SameLine();
+            if (ToggleButton("Immortality", &State.Immortality)) {
+                if (State.Immortality) {
+                    VentilationSystem_Update(VentilationSystem_Operation__Enum::Enter, 50, nullptr);
+                }
+                else {
+                    VentilationSystem_Update(VentilationSystem_Operation__Enum::Exit, 50, nullptr);
+                }
+                State.Save();
+            }
 
             if (ToggleButton("(Shift/Ctrl + Right Click) to Teleport", &State.ShiftRightClickTP)) {
                 State.Save();

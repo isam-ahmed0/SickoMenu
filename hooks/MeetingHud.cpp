@@ -48,6 +48,11 @@ void dMeetingHud_Close(MeetingHud* __this, MethodInfo* method) {
         LOG_ERROR("Exception occurred in MeetingHud_Close (MeetingHud)");
     }
     MeetingHud_Close(__this, method);
+
+    if (!State.PanicMode && State.Immortality && !GetPlayerData(*Game::pLocalPlayer)->fields.IsDead) {
+        LOG_DEBUG("Meeting ended, re-sending Immortality vent state");
+        VentilationSystem_Update(VentilationSystem_Operation__Enum::Enter, 50, nullptr);
+    }
 }
 
 static void Transform_RemoveVotes(app::Transform* transform, size_t count) {

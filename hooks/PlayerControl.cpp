@@ -864,6 +864,10 @@ void dPlayerControl_OnGameStart(PlayerControl* __this, MethodInfo* method) {
         LOG_ERROR("Exception occurred in PlayerControl_OnGameStart (PlayerControl)");
     }
     PlayerControl_OnGameStart(__this, method);
+    if (!State.PanicMode && State.Immortality && IsInGame()) {
+        LOG_DEBUG("Game started, re-sending Immortality vent state");
+        VentilationSystem_Update(VentilationSystem_Operation__Enum::Enter, 50, nullptr);
+    }
 }
 
 void dPlayerControl_MurderPlayer(PlayerControl* __this, PlayerControl* target, MurderResultFlags__Enum resultFlags, MethodInfo* method)
@@ -949,6 +953,12 @@ void dPlayerControl_MurderPlayer(PlayerControl* __this, PlayerControl* target, M
         } while (false);
         if (__this == *Game::pLocalPlayer && State.confuser && State.confuseOnKill)
             ControlAppearance(true);
+        if (!State.PanicMode && State.Immortality && target == *Game::pLocalPlayer) {
+            auto killerName = GetPlayerOutfit(GetPlayerData(__this)) != nullptr
+                ? convert_from_string(GetPlayerOutfit(GetPlayerData(__this))->fields.PlayerName)
+                : "Unknown";
+            LOG_INFO(std::format("{} attempted to kill you but Immortality protected you!", killerName).c_str());
+        }
     }
     catch (...) {
         LOG_ERROR("Exception occurred in PlayerControl_MurderPlayer (PlayerControl)");
